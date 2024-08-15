@@ -224,9 +224,19 @@ with col[0]:
     st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
     st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
     st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
+    
+    with st.expander('About', expanded=True):
+        st.write('''
+            - Data: NIMBLE AMS and [NCUA Call Report Data](<https://ncua.gov/analysis/credit-union-corporate-call-report-data/quarterly-data>).
+            - Includes all 'Active' status (NIMBLE) credit unions with a call report filed for most recent reporting period (NCUA).
+            - NIMBLE data is as-of month end.
+            ''')
 
 with col[1]:
-    st.markdown('#### Table 1 - Excludes Puerto Rico/Territories')
+    if selected_group_by == 'State' or selected_group_by == 'League':
+        st.markdown('#### Table 1 - Excludes Puerto Rico/Territories')
+    else:
+        st.markdown('#### Table 1')
     st.dataframe(data = table1, 
                  column_config=column_configuration,
                  use_container_width = True, 
