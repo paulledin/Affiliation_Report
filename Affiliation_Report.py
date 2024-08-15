@@ -13,44 +13,6 @@ import altair as alt
 ###############################################################################
 #Function Definitions
 ###############################################################################
-def get_report_periods():
-    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
-    
-    retVal = list()
-    index = 0
-    for x in periods:
-        retVal.insert(index, periods[x])
-        index += 1
-
-    return pd.DataFrame(retVal[0])
-
-def getTable1(aflType, groupBy, month):
-    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_' + groupBy + '_' + aflType + '_' + month + '.csv'))
-
-def getTable2(aflType, groupBy, month):
-    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_2_' + groupBy + '_' + aflType + '_' + month + '.csv'))
-
-def getChartData(aflType, groupBy):
-    periods = get_report_periods()
-    
-    retVal = pd.DataFrame({"Period" : [],
-                           "Measure" : [],
-                           "AFL Rate" : []})    
-    for x in periods.index:
-        df_this_period = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_1_' + groupBy + '_' + aflType + '_' + str(periods['period'][x]) + '.csv')
-        df_this_period = df_this_period.loc[(df_this_period['State'] == 'Totals')]
-        df_this_period = df_this_period[['% CUs Affiliated', '% Memberships Affiliated', '% Assets Affiliated']]
-        df_this_period['period'] = str(periods['period'][x])
-        
-        pct_cus_value = pd.DataFrame(df_this_period.iloc[0:, 0])
-        pct_mem_value = pd.DataFrame(df_this_period.iloc[0:, 1])
-        pct_asset_value = pd.DataFrame(df_this_period.iloc[0:, 2])
-        retVal.loc[len(retVal.index)] = [str(periods['period'][x]), '% CUs Affiliated', pct_cus_value['% CUs Affiliated'].iloc[0] * 100]
-        retVal.loc[len(retVal.index)] = [str(periods['period'][x]), '% Memberships Affiliated', pct_mem_value['% Memberships Affiliated'].iloc[0] * 100]
-        retVal.loc[len(retVal.index)] = [str(periods['period'][x]), '% Assets Affiliated', pct_asset_value['% Assets Affiliated'].iloc[0] * 100]
-
-    return (retVal)
-
 def convertDateToDisplay(date):
     switcher = {
         "01": "January",
@@ -87,9 +49,60 @@ def convertDateToSystem(date):
     
     return date[len(date)-4:len(date)] + switcher.get(date[:len(date)-5], "**Bad Month**")
 
-def get_report_periods_for_display():
+def get_report_periods():
     periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
     
+    retVal = list()
+    index = 0
+    for x in periods:
+        retVal.insert(index, periods[x])
+        index += 1
+    
+    return (retVal)
+
+def getTableAFLTable(afl_type, group_by, month, table_number):
+    if(afl_type == 'Legacy CUNA'):
+        aflType = 'Legacycuna'
+    elif(afl_type == 'Legacy NAFCU'):
+        aflType = 'Legacynafcu'
+    elif(afl_type == 'Member of Both'):
+        aflType = 'Both'
+    else:
+        aflType = 'Either'
+        
+    if(group_by == 'League'):
+        groupBy = 'ByLeague'
+    elif(group_by == 'Asset Class(9)'):
+        groupBy = 'ByAcl_9'
+    elif(group_by == 'Asset Class(13)'):
+        groupBy = 'ByAcl_13'
+    else:
+        groupBy = 'ByState'
+        
+    return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv'))
+
+def getPreviousSystemMonth(month):
+    system_month = int(convertDateToSystem(month)[4:])
+    prev_system_year = convertDateToSystem(month)[:4]
+    
+    prev_system_month = system_month - 1
+    if(prev_system_month == 0):
+        prev_system_month = 12
+        prev_system_year = str(int(prev_system_year) - 1)
+           
+    return (prev_system_year + str(prev_system_month).rjust(2, '0'))
+
+def getMetricDeltas(aflType, groupBy, month):
+    this_month = getTableAFLTable(afl_type, group_by, month, "1")
+    last_month = getTableAFLTable(afl_type, group_by, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
+    
+    return (pd.DataFrame({'CU AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 10] - last_month.iloc[len(this_month) - 1, 10]) * 100, 2))],
+                          'Members AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 11] - last_month.iloc[len(this_month) - 1, 11]) * 100, 2))],
+                          'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
+                         }))
+
+def get_report_periods_for_display():
+    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
     retVal = list()
 
     index = 0
@@ -112,54 +125,25 @@ def format_currency(amount):
 ###############################################################################
 report_periods = get_report_periods_for_display()
 
-add_sidebar_afl_type = st.sidebar.selectbox('Affiliation Type', ('Member of CUNA and/or NAFCU','Legacy CUNA', 'Legacy NAFCU', 'Member of Both'))
-add_sidebar_group_by = st.sidebar.selectbox('Group By', ('State','League', 'Asset Class(9)', 'Asset Class(13)'))
-add_sidebar_month = st.sidebar.selectbox('Month', report_periods['report_periods_formatted'])
-
-month = convertDateToSystem(add_sidebar_month)
-
-st.title("America's Credit Unions")
-st.write("----------------------------------------------------------")
-st.write("Affiliation Report")
-st.write("Month Ended: " + add_sidebar_month)
-
-if add_sidebar_afl_type == 'Member of CUNA and/or NAFCU':
-    st.write("Affiliated Members of Legacy CUNA and/or NAFCU")
-    aflType = "Either"
+st.set_page_config(
+    page_title="America's Credit Unions",
+    layout="wide",
+    initial_sidebar_state="expanded")
+alt.themes.enable("dark")
+     
+with st.sidebar:
+    st.title('America\'s Credit Unions - Affiliation Report')
     
-if add_sidebar_afl_type == 'Legacy CUNA':
-    st.write("Affiliated Members of Legacy CUNA")
-    aflType = "Legacycuna"
-
-if add_sidebar_afl_type == 'Legacy NAFCU':
-    st.write("Affiliated Members of Legacy NAFCU")
-    aflType = "Legacynafcu"
-
-if add_sidebar_afl_type == 'Member of Both':
-    st.write("Affiliated Members of Both Legacy CUNA and NAFCU")
-    aflType = "Both"
+    afl_type = ['Member of CUNA and/or NAFCU','Legacy CUNA', 'Legacy NAFCU', 'Member of Both']
+    selected_afl_type = st.selectbox('Affiliation Type', afl_type)
     
-if add_sidebar_group_by == 'State':
-    st.write("Grouped by State")
-    st.write("----------------------------------------------------------")
-    groupBy = "ByState"
+    group_by = ['State', 'League', 'Asset Class(9)', 'Asset Class(13)']
+    selected_group_by = st.selectbox('Group By', group_by)
     
-if add_sidebar_group_by == 'League':
-    st.write("Grouped by League")
-    st.write("----------------------------------------------------------")
-    groupBy = "ByLeague"
-
-if add_sidebar_group_by == 'Asset Class(9)':
-    st.write("Grouped by Asset Class (9)")
-    st.write("----------------------------------------------------------")
-    groupBy = "ByAcl_9"
-
-if add_sidebar_group_by == 'Asset Class(13)':
-    st.write("Grouped by Asset Class (13)")
-    st.write("----------------------------------------------------------")
-    groupBy = "ByAcl_13"
-
-table1 = getTable1(aflType, groupBy, month)
+    month = report_periods['report_periods_formatted']
+    selected_month = st.selectbox('Month', month)
+    
+table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "1")
 table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
 table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
 table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
@@ -228,34 +212,38 @@ column_configuration = {
     ),
 }
 
-chart_data = getChartData("Either", "ByState")
-st.header('Affiliation Chart')
+col = st.columns((1.5, 6.5), gap='medium')
+with col[0]:          
+    metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month)   
+    
+    st.markdown('#### Key Ratios')
+    st.markdown('###### (excl Table 2 CUs)')
+    st.markdown('###### ' + selected_month)
+    
+    #this_month.iloc[len(this_month) - 1, 10]
+    st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
+    st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
+    st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
 
-chart = alt.Chart(chart_data).mark_line().encode(
-    x='Period',
-    y='AFL Rate'
-)
-#st.write(chart, use_container_width = True)
-
-st.dataframe(data = table1, 
-             column_config=column_configuration,
-             use_container_width = True, 
-             hide_index = True,
-            )
-
-if add_sidebar_group_by == 'State' or add_sidebar_group_by == 'League':
-    table2 = getTable2(aflType, groupBy, month)
-    table2['% CUs Affiliated'] = table2['% CUs Affiliated'] * 100
-    table2['% Memberships Affiliated'] = table2['% Memberships Affiliated'] * 100
-    table2['% Assets Affiliated'] = table2['% Assets Affiliated'] * 100
-    st.dataframe(data = table2, 
+with col[1]:
+    st.markdown('#### Table 1 - Excludes Puerto Rico/Territories')
+    st.dataframe(data = table1, 
                  column_config=column_configuration,
                  use_container_width = True, 
                  hide_index = True,
-                )
+                 )
+
+    if selected_group_by == 'State' or selected_group_by == 'League':
+        st.markdown('#### Table 2 - Puerto Rico/Territories')
+        table2 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "2")
+        table2['% CUs Affiliated'] = table2['% CUs Affiliated'] * 100
+        table2['% Memberships Affiliated'] = table2['% Memberships Affiliated'] * 100
+        table2['% Assets Affiliated'] = table2['% Assets Affiliated'] * 100
+        
+        st.dataframe(data = table2, 
+                     column_config=column_configuration,
+                     use_container_width = True, 
+                     hide_index = True,
+                     )   
 
 
-
-
-
- 
