@@ -2,7 +2,7 @@
 """
 Created on Mon Jul 29 13:40:15 2024
 
-@author: PLedin
+@author: Paul Ledin
 """
 
 import streamlit as st
@@ -120,6 +120,7 @@ def get_report_periods_for_display():
     
 def format_currency(amount):
     return '${:,.2f}'.format(amount)
+
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
@@ -217,10 +218,11 @@ with col[0]:
     metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month)   
     
     st.markdown('#### Key Ratios')
-    st.markdown('###### (excl Table 2 CUs)')
+    if selected_group_by == 'State' or selected_group_by == 'League':
+        st.markdown('###### (excl Table 2 CUs)')
+    
     st.markdown('###### ' + selected_month)
     
-    #this_month.iloc[len(this_month) - 1, 10]
     st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
     st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
     st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
