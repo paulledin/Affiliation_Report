@@ -9,6 +9,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
+import plotly.express as px
 
 ###############################################################################
 #Function Definitions
@@ -121,6 +122,7 @@ def get_report_periods_for_display():
 def format_currency(amount):
     return '${:,.2f}'.format(amount)
 
+
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
@@ -130,10 +132,10 @@ st.set_page_config(
     page_title="America's Credit Unions",
     layout="wide",
     initial_sidebar_state="expanded")
-alt.themes.enable("dark")
      
 with st.sidebar:
-    st.title('America\'s Credit Unions - Affiliation Report')
+    st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
+    st.title('Affiliation Report')
     
     afl_type = ['Member of CUNA and/or NAFCU','Legacy CUNA', 'Legacy NAFCU', 'Member of Both']
     selected_afl_type = st.selectbox('Affiliation Type', afl_type)
@@ -219,13 +221,14 @@ with col[0]:
     
     st.markdown('#### Key Ratios')
     if selected_group_by == 'State' or selected_group_by == 'League':
-        st.markdown('###### (excl Table 2 CUs)')
-    
+        st.markdown('###### (excludes Table 2 CUs)')
     st.markdown('###### ' + selected_month)
+    st.markdown('---')
     
     st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
     st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
     st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
+    st.markdown('---')
     
     with st.expander('About', expanded=True):
         st.write('''
@@ -233,6 +236,7 @@ with col[0]:
             - Includes all 'Active' status (NIMBLE) credit unions with a call report filed for most recent reporting period (NCUA).
             - NIMBLE data is as-of month end.
             ''')
+    st.markdown('---')
 
 with col[1]:
     if selected_group_by == 'State' or selected_group_by == 'League':
@@ -244,6 +248,7 @@ with col[1]:
                  use_container_width = True, 
                  hide_index = True,
                  )
+    st.markdown('---')
 
     if selected_group_by == 'State' or selected_group_by == 'League':
         st.markdown('#### Table 2 - Puerto Rico/Territories')
@@ -257,5 +262,6 @@ with col[1]:
                      use_container_width = True, 
                      hide_index = True,
                      )   
+        st.markdown('---')
 
 
