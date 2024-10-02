@@ -131,8 +131,6 @@ thePassPhrase = st.secrets["thePassPhrase"]
 #st.write("DB password:", st.secrets["db_password"])
 report_periods = get_report_periods_for_display()
 
-st.write(st.secrets["thePassPhrase"])
-
 st.set_page_config(
     page_title="America's Credit Unions",
     layout="wide",
