@@ -9,7 +9,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
-#import plotly.express as px
+import plotly.express as px
 
 ###############################################################################
 #Function Definitions
@@ -126,142 +126,154 @@ def format_currency(amount):
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
+thePassPhrase = 'PeopleNotProfit$'
 report_periods = get_report_periods_for_display()
 
 st.set_page_config(
     page_title="America's Credit Unions",
     layout="wide",
     initial_sidebar_state="expanded")
-     
+
 with st.sidebar:
     st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
-    st.title('Affiliation Report')
-    
-    afl_type = ['Member of CUNA and/or NAFCU','Legacy CUNA', 'Legacy NAFCU', 'Member of Both']
-    selected_afl_type = st.selectbox('Affiliation Type', afl_type)
-    
-    group_by = ['State', 'League', 'Asset Class(9)', 'Asset Class(13)']
-    selected_group_by = st.selectbox('Group By', group_by)
-    
-    month = report_periods['report_periods_formatted']
-    selected_month = st.selectbox('Month', month)
-    
-table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "1")
-table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
-table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
-table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
+    passphrase = st.text_input("### Please enter the passphrase:")
 
-column_configuration = {
-    "State": st.column_config.TextColumn(
-        "State", max_chars=50
-    ),
-    "Affiliated CUs": st.column_config.NumberColumn(
-        "Affiliated CUs",
-        min_value=0,
-        max_value=10000,
-    ),
-    "Non Affiliated CUs": st.column_config.NumberColumn(
-        "Non Affiliated CUs",
-        min_value=0,
-        max_value=10000,
-    ),
-    "State Chartered": st.column_config.NumberColumn(
-        "State Chartered",
-        min_value=0,
-        max_value=10000,
-    ),
-    "Fed Chartered": st.column_config.NumberColumn(
-        "Fed Chartered",
-        min_value=0,
-        max_value=10000,
-    ),
-    "Total CUs": st.column_config.NumberColumn(
-        "Total CUs",
-        min_value=0,
-        max_value=10000,
-    ),
-    "Affiliated Memberships": st.column_config.NumberColumn(
-        "Affiliated Memberships",
-        min_value=0,
-        max_value=10000,
-    ),
-    "Affiliated Assets": st.column_config.NumberColumn(
-        "Affiliated Assets",
-        min_value=0,
-        max_value=10000,
-    ),
-    "Total Assets": st.column_config.NumberColumn(
-        "Total Assets",
-        min_value=0,
-        max_value=10000,
-    ),
-    "% CUs Affiliated": st.column_config.NumberColumn(
-        "% CUs Affiliated",
-        min_value=0,
-        max_value=10000,
-        format="%.1f"
-    ),
-    "% Memberships Affiliated": st.column_config.NumberColumn(
-        "% Memberships Affiliated",
-        min_value=0,
-        max_value=10000,
-        format="%.1f"
-    ),
-    "% Assets Affiliated": st.column_config.NumberColumn(
-        "% Assets Affiliated",
-        min_value=0,
-        max_value=10000,
-        format="%.1f"
-    ),
-}
-
-col = st.columns((1.5, 6.5), gap='medium')
-with col[0]:          
-    metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month)   
+if (passphrase != thePassPhrase):
+    if len(passphrase) > 0:
+        st.markdown('# Passphrase not correct....')
+        st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
+else:
+    with st.sidebar:
+        st.title('Affiliation Report')
     
-    st.markdown('#### Key Ratios')
-    if selected_group_by == 'State' or selected_group_by == 'League':
-        st.markdown('###### (excludes Table 2 CUs)')
-    st.markdown('###### ' + selected_month)
-    st.markdown('---')
+        afl_type = ['Member of CUNA and/or NAFCU','Legacy CUNA', 'Legacy NAFCU', 'Member of Both']
+        selected_afl_type = st.selectbox('Affiliation Type', afl_type)
     
-    st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
-    st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
-    st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
-    st.markdown('---')
+        group_by = ['State', 'League', 'Asset Class(9)', 'Asset Class(13)']
+        selected_group_by = st.selectbox('Group By', group_by)
     
-    with st.expander('About', expanded=True):
-        st.write('''
-            - Data: NIMBLE AMS and [NCUA Call Report Data](<https://ncua.gov/analysis/credit-union-corporate-call-report-data/quarterly-data>).
-            - Includes all 'Active' status (NIMBLE) credit unions with a call report filed for most recent reporting period (NCUA).
-            - NIMBLE data is as-of month end.
-            ''')
-    st.markdown('---')
+        month = report_periods['report_periods_formatted']
+        selected_month = st.selectbox('Month', month)
+    
+    table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "1")
+    table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
+    table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
+    table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
-with col[1]:
-    if selected_group_by == 'State' or selected_group_by == 'League':
-        st.markdown('#### Table 1 - Excludes Puerto Rico/Territories')
-    else:
-        st.markdown('#### Table 1')
-    st.dataframe(data = table1, 
-                 column_config=column_configuration,
-                 use_container_width = True, 
-                 hide_index = True,
-                 )
-    st.markdown('---')
+    column_configuration = {
+            "State": st.column_config.TextColumn(
+            "State", max_chars=50
+            ),
+            "Affiliated CUs": st.column_config.NumberColumn(
+            "Affiliated CUs",
+            min_value=0,
+            max_value=10000,
+            ),
+            "Non Affiliated CUs": st.column_config.NumberColumn(
+            "Non Affiliated CUs",
+            min_value=0,
+            max_value=10000,
+            ),
+            "State Chartered": st.column_config.NumberColumn(
+            "State Chartered",
+            min_value=0,
+            max_value=10000,
+            ),
+            "Fed Chartered": st.column_config.NumberColumn(
+            "Fed Chartered",
+            min_value=0,
+            max_value=10000,
+            ),
+            "Total CUs": st.column_config.NumberColumn(
+            "Total CUs",
+            min_value=0,
+            max_value=10000,
+            ),
+            "Affiliated Memberships": st.column_config.NumberColumn(
+            "Affiliated Memberships",
+            min_value=0,
+            max_value=10000,
+            ),
+            "Affiliated Assets": st.column_config.NumberColumn(
+            "Affiliated Assets",
+            min_value=0,
+            max_value=10000,
+            ),
+            "Total Assets": st.column_config.NumberColumn(
+            "Total Assets",
+            min_value=0,
+            max_value=10000,
+            ),
+            "% CUs Affiliated": st.column_config.NumberColumn(
+            "% CUs Affiliated",
+            min_value=0,
+            max_value=10000,
+            format="%.1f"
+            ),
+            "% Memberships Affiliated": st.column_config.NumberColumn(
+            "% Memberships Affiliated",
+            min_value=0,
+            max_value=10000,
+            format="%.1f"
+            ),
+            "% Assets Affiliated": st.column_config.NumberColumn(
+            "% Assets Affiliated",
+            min_value=0,
+            max_value=10000,
+            format="%.1f"
+            ),
+            }
 
-    if selected_group_by == 'State' or selected_group_by == 'League':
-        st.markdown('#### Table 2 - Puerto Rico/Territories')
-        table2 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "2")
-        table2['% CUs Affiliated'] = table2['% CUs Affiliated'] * 100
-        table2['% Memberships Affiliated'] = table2['% Memberships Affiliated'] * 100
-        table2['% Assets Affiliated'] = table2['% Assets Affiliated'] * 100
+    col = st.columns((1.5, 6.5), gap='medium')
+    with col[0]:          
+        metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month)   
+    
+        st.markdown('#### Key Ratios')
+        if selected_group_by == 'State' or selected_group_by == 'League':
+            st.markdown('###### (excludes Table 2 CUs)')
+            st.markdown('###### ' + 'Month Ended - ' + selected_month)
+            st.markdown('---')
+    
+        st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
+        st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
+        st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
+        st.markdown('---')
+    
+        with st.expander('About', expanded=True):
+            st.write('''
+                     - Data: NIMBLE AMS and [NCUA Call Report Data](<https://ncua.gov/analysis/credit-union-corporate-call-report-data/quarterly-data>).
+                     - Includes all 'Active' status (NIMBLE) credit unions with a call report filed for most recent reporting period (NCUA).
+                     - NIMBLE data is as-of month end.
+                     ''')
+                     
+        st.markdown('---')
+
+    with col[1]:
+        if selected_group_by == 'State' or selected_group_by == 'League':
+            st.markdown('#### Table 1 - Excludes Puerto Rico/Territories')
+        else:
+            st.markdown('#### Table 1')
         
-        st.dataframe(data = table2, 
+        st.dataframe(data = table1, 
                      column_config=column_configuration,
                      use_container_width = True, 
                      hide_index = True,
-                     )   
+                     )
+        st.markdown('---')
+
+        if selected_group_by == 'State' or selected_group_by == 'League':
+            st.markdown('#### Table 2 - Puerto Rico/Territories')
+            table2 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "2")
+            table2['% CUs Affiliated'] = table2['% CUs Affiliated'] * 100
+            table2['% Memberships Affiliated'] = table2['% Memberships Affiliated'] * 100
+            table2['% Assets Affiliated'] = table2['% Assets Affiliated'] * 100
+        
+            st.dataframe(data = table2, 
+                         column_config=column_configuration,
+                         use_container_width = True, 
+                         hide_index = True,
+                         )   
+            
         st.markdown('---')
 
 
