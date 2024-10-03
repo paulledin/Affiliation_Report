@@ -214,13 +214,13 @@ else:
             "% Memberships Affiliated",
             min_value=0,
             max_value=10000,
-            format="%.1f"
+            format="%.2f"
             ),
             "% Assets Affiliated": st.column_config.NumberColumn(
             "% Assets Affiliated",
             min_value=0,
             max_value=10000,
-            format="%.1f"
+            format="%.2f"
             ),
             }
 
