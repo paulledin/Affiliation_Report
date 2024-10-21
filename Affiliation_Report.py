@@ -93,14 +93,21 @@ def getPreviousSystemMonth(month):
            
     return (prev_system_year + str(prev_system_month).rjust(2, '0'))
 
-def getMetricDeltas(aflType, groupBy, month):
-    this_month = getTableAFLTable(afl_type, group_by, month, "1")
-    last_month = getTableAFLTable(afl_type, group_by, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
-    
-    return (pd.DataFrame({'CU AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 10] - last_month.iloc[len(this_month) - 1, 10]) * 100, 2))],
-                          'Members AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 11] - last_month.iloc[len(this_month) - 1, 11]) * 100, 2))],
-                          'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
-                         }))
+def getMetricDeltas(aflType, groupBy, month, report_periods):
+    if (convertDateToSystem(month) == get_last_reported_period(report_periods)):
+        retVal = pd.DataFrame({'CU AFL Delta':[],
+                'Members AFL Delta':[],
+                'Assets AFL Delta':[]
+                })
+    else:
+        this_month = getTableAFLTable(aflType, groupBy, month, "1")
+        last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
+        
+        retVal = pd.DataFrame({'CU AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 10] - last_month.iloc[len(this_month) - 1, 10]) * 100, 2))],
+                              'Members AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 11] - last_month.iloc[len(this_month) - 1, 11]) * 100, 2))],
+                              'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
+                             })
+    return (retVal)
 
 def get_report_periods_for_display():
     periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
@@ -119,6 +126,9 @@ def get_report_periods_for_display():
 
     return df_retVal
     
+def get_last_reported_period(report_periods):    
+    return str(report_periods.iloc[len(report_periods) - 1, 0])
+
 def format_currency(amount):
     return '${:,.2f}'.format(amount)
 
@@ -156,6 +166,7 @@ else:
         selected_month = st.selectbox('Month', month)
     
     table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "1")
+    
     table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
@@ -226,7 +237,7 @@ else:
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
-        metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month)   
+        metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month, report_periods)   
     
         st.markdown('#### Key Ratios')
         if selected_group_by == 'State' or selected_group_by == 'League':
@@ -234,10 +245,15 @@ else:
             st.markdown('###### ' + 'Month Ended - ' + selected_month)
             st.markdown('---')
     
-        st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
-        st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
-        st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
-        st.markdown('---')
+        if len(metric_deltas) == 0:
+            st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%')
+            st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%')
+            st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%')
+        else:
+            st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
+            st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
+            st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
+            st.markdown('---')
     
         with st.expander('About', expanded=True):
             st.write('''
