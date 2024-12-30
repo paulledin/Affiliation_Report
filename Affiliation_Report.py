@@ -107,17 +107,17 @@ def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
         aflType = 'Both'
     else:
         aflType = 'Either'
-
     sqlStmt += aflType + '.afl_table_' + table_number
     
-    #if(group_by == 'League'):
-    #    groupBy = 'ByLeague'
-    #elif(group_by == 'Asset Class(9)'):
-    #    groupBy = 'ByAcl_9'
-    #elif(group_by == 'Asset Class(13)'):
-    #    groupBy = 'ByAcl_13'
-    #else:
-    #    groupBy = 'ByState'
+    if(group_by == 'League'):
+        groupBy = 'ByLeague'
+    elif(group_by == 'Asset Class(9)'):
+        groupBy = 'ByAcl_9'
+    elif(group_by == 'Asset Class(13)'):
+        groupBy = 'ByAcl_13'
+    else:
+        groupBy = 'ByState'
+    sqlStmt += '.' + groupBy
 
     return (sqlStmt)
     #return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv'))
