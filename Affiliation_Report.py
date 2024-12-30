@@ -74,22 +74,26 @@ def get_report_periods_from_db():
 def get_report_periods_for_display_from_db():
     session = dbConn.session()
     periods = get_report_periods_from_db()
-    
+
+    for index, row in periods.iterrows():
+        display = row['period']
+        #st.write(display)
     #periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
     retVal = list()
 
-    index = 0
-    for x in periods:
-        retVal.insert(index, periods[x])
-        index += 1
+    #index = 0
+    #for x in periods:
+    #    retVal.insert(index, periods[x])
+    #    index += 1
         
-    df_retVal = pd.DataFrame(retVal[0])
+    #df_retVal = pd.DataFrame(retVal[0])
         
-    for i in range(len(df_retVal)):
-        period = df_retVal.loc[i, "period"]
-        df_retVal.loc[df_retVal['period'] == period, 'report_periods_formatted'] = convertDateToDisplay(str(period))
+    #for i in range(len(df_retVal)):
+    #    period = df_retVal.loc[i, "period"]
+    #    df_retVal.loc[df_retVal['period'] == period, 'report_periods_formatted'] = convertDateToDisplay(str(period))
 
-    return df_retVal
+    #return df_retVal
+    return (retVal)
 
 def get_report_periods_for_display():
     periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
@@ -170,6 +174,7 @@ thePassPhrase = st.secrets["thePassPhrase"]
 report_periods = get_report_periods_for_display()
 #report_periods = get_report_periods_for_display_from_db()
 periods_test = get_report_periods_from_db()
+periods_test2 = get_report_periods_for_display_from_db()
 
 with st.sidebar:
     st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
