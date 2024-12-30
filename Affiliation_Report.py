@@ -195,7 +195,7 @@ else:
         group_by = ['State', 'League', 'Asset Class(9)', 'Asset Class(13)']
         selected_group_by = st.selectbox('Group By', group_by)
     
-        month = report_periods['report_periods_formatted']
+        month = report_periods['REPORT_PERIODS_FORMATTED']
         selected_month = st.selectbox('Month', month)
     
     table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "1")
