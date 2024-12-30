@@ -77,7 +77,8 @@ def get_report_periods_for_display_from_db():
 
     #st.write(periods)
 
-    periods['report_periods_formatted'] = convertDateToDisplay(str(periods['PERIOD']))
+    #periods['report_periods_formatted'] = convertDateToDisplay(str(periods['PERIOD']))
+    periods['report_periods_formatted'] = "HERE"
 
     for index, row in periods.iterrows():
         #row['report_periods_formatted'] = convertDateToDisplay(str(row['PERIOD']))
