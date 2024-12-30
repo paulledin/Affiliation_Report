@@ -72,7 +72,7 @@ def get_report_periods_from_db():
     return (session.sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
 
 def get_report_periods_for_display_from_db():
-    session = dbConn.session()
+    #session = dbConn.session()
     periods = get_report_periods_from_db()
     periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)
                                                              
