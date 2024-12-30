@@ -66,6 +66,9 @@ def getPreviousSystemMonth(month):
         prev_system_year = str(int(prev_system_year) - 1)
            
     return (prev_system_year + str(prev_system_month).rjust(2, '0'))
+
+def get_last_reported_period(report_periods):    
+    return str(report_periods.iloc[len(report_periods) - 1, 0])
     
 @st.cache_data
 def get_report_periods_from_db():
@@ -143,14 +146,6 @@ def getMetricDeltas(aflType, groupBy, month, report_periods):
                               'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
                              })
     return (retVal)
-    
-def get_last_reported_period(report_periods):    
-    return str(report_periods.iloc[len(report_periods) - 1, 0])
-
-def format_currency(amount):
-    return '${:,.2f}'.format(amount)
-
-
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
