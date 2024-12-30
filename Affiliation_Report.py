@@ -96,6 +96,7 @@ def get_report_periods_for_display_from_db():
     
     return (periods)
 
+@st.cache_data
 def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
     sqlStmt = "SELECT * FROM monthly_report."
     
@@ -119,7 +120,7 @@ def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
         groupBy = 'ByState'
     sqlStmt += '_' + groupBy + '_' + convertDateToSystem(month)
 
-    return (sqlStmt)
+    return (dbConn.session().sql(sqlStmt).to_pandas())
     #return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv'))
 
 def get_report_periods():
