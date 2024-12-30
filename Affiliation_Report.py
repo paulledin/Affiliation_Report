@@ -15,6 +15,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
+thePassPhrase = st.secrets["thePassPhrase"]
 dbConn = st.connection("snowflake")
 ###############################################################################
 #Function Definitions
@@ -152,7 +153,6 @@ def format_currency(amount):
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
-thePassPhrase = st.secrets["thePassPhrase"]
 report_periods = get_report_periods_for_display_from_db()
 
 with st.sidebar:
