@@ -55,6 +55,17 @@ def convertDateToSystem(date):
     }
     
     return date[len(date)-4:len(date)] + switcher.get(date[:len(date)-5], "**Bad Month**")
+
+def getPreviousSystemMonth(month):
+    system_month = int(convertDateToSystem(month)[4:])
+    prev_system_year = convertDateToSystem(month)[:4]
+    
+    prev_system_month = system_month - 1
+    if(prev_system_month == 0):
+        prev_system_month = 12
+        prev_system_year = str(int(prev_system_year) - 1)
+           
+    return (prev_system_year + str(prev_system_month).rjust(2, '0'))
     
 @st.cache_data
 def get_report_periods_from_db():
@@ -115,16 +126,7 @@ def getTableAFLTable(afl_type, group_by, month, table_number):
         
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv'))
 
-def getPreviousSystemMonth(month):
-    system_month = int(convertDateToSystem(month)[4:])
-    prev_system_year = convertDateToSystem(month)[:4]
-    
-    prev_system_month = system_month - 1
-    if(prev_system_month == 0):
-        prev_system_month = 12
-        prev_system_year = str(int(prev_system_year) - 1)
-           
-    return (prev_system_year + str(prev_system_month).rjust(2, '0'))
+
 
 def getMetricDeltas(aflType, groupBy, month, report_periods):
     if (convertDateToSystem(month) == get_last_reported_period(report_periods)):
