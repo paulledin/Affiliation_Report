@@ -73,6 +73,23 @@ def get_report_periods_from_db():
     
     return (retVal)
 
+def get_report_periods_for_display():
+    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
+    retVal = list()
+
+    index = 0
+    for x in periods:
+        retVal.insert(index, periods[x])
+        index += 1
+        
+    df_retVal = pd.DataFrame(retVal[0])
+        
+    for i in range(len(df_retVal)):
+        period = df_retVal.loc[i, "period"]
+        df_retVal.loc[df_retVal['period'] == period, 'report_periods_formatted'] = convertDateToDisplay(str(period))
+
+    return df_retVal
+
 def getTableAFLTable(afl_type, group_by, month, table_number):
     if(afl_type == 'Legacy CUNA'):
         aflType = 'Legacycuna'
@@ -120,23 +137,6 @@ def getMetricDeltas(aflType, groupBy, month, report_periods):
                               'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
                              })
     return (retVal)
-
-def get_report_periods_for_display():
-    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
-    retVal = list()
-
-    index = 0
-    for x in periods:
-        retVal.insert(index, periods[x])
-        index += 1
-        
-    df_retVal = pd.DataFrame(retVal[0])
-        
-    for i in range(len(df_retVal)):
-        period = df_retVal.loc[i, "period"]
-        df_retVal.loc[df_retVal['period'] == period, 'report_periods_formatted'] = convertDateToDisplay(str(period))
-
-    return df_retVal
     
 def get_last_reported_period(report_periods):    
     return str(report_periods.iloc[len(report_periods) - 1, 0])
