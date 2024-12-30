@@ -169,6 +169,7 @@ def format_currency(amount):
 thePassPhrase = st.secrets["thePassPhrase"]
 report_periods = get_report_periods_for_display()
 #report_periods = get_report_periods_for_display_from_db()
+periods_test = get_report_periods_from_db()
 
 with st.sidebar:
     st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
