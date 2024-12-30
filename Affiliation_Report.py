@@ -55,17 +55,6 @@ def convertDateToSystem(date):
     }
     
     return date[len(date)-4:len(date)] + switcher.get(date[:len(date)-5], "**Bad Month**")
-
-def get_report_periods():
-    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
-    
-    retVal = list()
-    index = 0
-    for x in periods:
-        retVal.insert(index, periods[x])
-        index += 1
-    
-    return (retVal)
     
 @st.cache_data
 def get_report_periods_from_db():
@@ -77,6 +66,17 @@ def get_report_periods_for_display_from_db():
     periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)
                                                              
     return (periods)
+
+def get_report_periods():
+    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
+    
+    retVal = list()
+    index = 0
+    for x in periods:
+        retVal.insert(index, periods[x])
+        index += 1
+    
+    return (retVal)
 
 def get_report_periods_for_display():
     periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
