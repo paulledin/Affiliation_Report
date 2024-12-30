@@ -74,8 +74,6 @@ def get_report_periods_from_db():
 def get_report_periods_for_display_from_db():
     session = dbConn.session()
     periods = get_report_periods_from_db()
-
-    #st.write(periods)
     periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)
                                                              
     return (periods)
