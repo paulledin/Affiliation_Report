@@ -75,6 +75,8 @@ def get_report_periods_for_display_from_db():
     session = dbConn.session()
     periods = get_report_periods_from_db()
 
+    st.write(periods)
+
     for index, row in periods.iterrows():
         row['report_periods_formatted'] = convertDateToDisplay(str(row['period']))
         #display = convertDateToDisplay(str(row['REPORT_PERIODS_FORMATTED']))
