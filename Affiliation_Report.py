@@ -61,13 +61,8 @@ def get_report_periods():
     return (retVal)
 
 def get_report_periods_from_db():
-    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
-    
-    retVal = list()
-    index = 0
-    for x in periods:
-        retVal.insert(index, periods[x])
-        index += 1
+    session = dbConn.session()
+    retVal = session.sql("SELECT TABLE_SCHEMA, TABLE_NAME, TABLE_OWNER, ROW_COUNT, BYTES, CREATED, LAST_ALTERED FROM " + databaseName + ".information_schema.tables WHERE table_type!='VIEW' ").to_pandas()
     
     return (retVal)
 
