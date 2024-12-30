@@ -59,12 +59,13 @@ def convertDateToSystem(date):
 @st.cache_data
 def get_report_periods_from_db():
     session = dbConn.session()   
-    return (session.sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
+    
+    return (dbConn.session().sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
 
 def get_report_periods_for_display_from_db():
     periods = get_report_periods_from_db()
-    periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)
-                                                             
+    periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)                                                             
+    
     return (periods)
 
 def get_report_periods():
@@ -75,7 +76,7 @@ def get_report_periods():
     for x in periods:
         retVal.insert(index, periods[x])
         index += 1
-    
+
     return (retVal)
 
 def get_report_periods_for_display():
