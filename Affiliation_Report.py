@@ -69,19 +69,19 @@ def get_report_periods():
 @st.cache_data
 def get_report_periods_from_db():
     session = dbConn.session()   
-    return (session.sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS REPORT_PERIODS_FORMATTED FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
+    return (session.sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) AS period FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas())
 
 def get_report_periods_for_display_from_db():
     session = dbConn.session()
     periods = get_report_periods_from_db()
 
     for index, row in periods.iterrows():
-        row['REPORT_PERIODS_FORMATTED'] = row['REPORT_PERIODS_FORMATTED']
-        display = convertDateToDisplay(str(row['REPORT_PERIODS_FORMATTED']))
+        row['report_periods_formatted'] = convertDateToDisplay(str(row['period']))
+        #display = convertDateToDisplay(str(row['REPORT_PERIODS_FORMATTED']))
         #st.write(display)
         #convertDateToDisplay(str(period))
     #periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
-    retVal = list()
+    #retVal = list()
 
     #index = 0
     #for x in periods:
