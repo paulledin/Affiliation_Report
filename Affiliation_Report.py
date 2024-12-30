@@ -61,6 +61,17 @@ def get_report_periods():
     
     return (retVal)
 
+def get_report_periods_from_db():
+    periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')
+    
+    retVal = list()
+    index = 0
+    for x in periods:
+        retVal.insert(index, periods[x])
+        index += 1
+    
+    return (retVal)
+
 def getTableAFLTable(afl_type, group_by, month, table_number):
     if(afl_type == 'Legacy CUNA'):
         aflType = 'Legacycuna'
