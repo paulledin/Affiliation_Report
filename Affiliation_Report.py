@@ -80,7 +80,7 @@ def get_report_periods_for_display_from_db():
     #periods['report_periods_formatted'] = convertDateToDisplay(str(periods['PERIOD']))
     periods['report_periods_formatted'] = convertDateToDisplay(str('202410'))
 
-    periods['report_periods_formatted_test'] = periods.apply(lambda formatted: row.PERIOD, axis=1)
+    periods['report_periods_formatted_test'] = periods.apply(lambda row: row.PERIOD, axis=1)
     #df['c'] = df.apply(lambda row: row.a + row.b, axis=1)
 
     
