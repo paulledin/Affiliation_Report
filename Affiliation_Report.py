@@ -76,17 +76,8 @@ def get_report_periods_for_display_from_db():
     periods = get_report_periods_from_db()
 
     #st.write(periods)
-
-    #periods['report_periods_formatted'] = convertDateToDisplay(str(periods['PERIOD']))
-    periods['report_periods_formatted'] = convertDateToDisplay(str('202410'))
-
-    periods['report_periods_formatted_test'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1)
-    #df['c'] = df.apply(lambda row: row.a + row.b, axis=1)
-
-    
-    for index, row in periods.iterrows():
-        #row['report_periods_formatted'] = convertDateToDisplay(str(row['PERIOD']))
-        row['report_periods_formatted'] = "HERE"
+    periods['report_periods_formatted'] = periods.apply(lambda row: convertDateToDisplay(str(row.PERIOD)), axis=1
+                                                             
     return (periods)
 
 def get_report_periods_for_display():
