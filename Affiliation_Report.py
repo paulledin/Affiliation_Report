@@ -69,6 +69,22 @@ def getPreviousSystemMonth(month):
 
 def get_last_reported_period(report_periods):    
     return str(report_periods.iloc[len(report_periods) - 1, 0])
+
+def getMetricDeltas(aflType, groupBy, month, report_periods):
+    if (convertDateToSystem(month) == get_last_reported_period(report_periods)):
+        retVal = pd.DataFrame({'CU AFL Delta':[],
+                'Members AFL Delta':[],
+                'Assets AFL Delta':[]
+                })
+    else:
+        this_month = getTableAFLTable(aflType, groupBy, month, "1")
+        last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
+        
+        retVal = pd.DataFrame({'CU AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 10] - last_month.iloc[len(this_month) - 1, 10]) * 100, 2))],
+                              'Members AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 11] - last_month.iloc[len(this_month) - 1, 11]) * 100, 2))],
+                              'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
+                             })
+    return (retVal)
     
 @st.cache_data
 def get_report_periods_from_db():
@@ -128,24 +144,6 @@ def getTableAFLTable(afl_type, group_by, month, table_number):
         groupBy = 'ByState'
         
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv'))
-
-
-
-def getMetricDeltas(aflType, groupBy, month, report_periods):
-    if (convertDateToSystem(month) == get_last_reported_period(report_periods)):
-        retVal = pd.DataFrame({'CU AFL Delta':[],
-                'Members AFL Delta':[],
-                'Assets AFL Delta':[]
-                })
-    else:
-        this_month = getTableAFLTable(aflType, groupBy, month, "1")
-        last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
-        
-        retVal = pd.DataFrame({'CU AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 10] - last_month.iloc[len(this_month) - 1, 10]) * 100, 2))],
-                              'Members AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 11] - last_month.iloc[len(this_month) - 1, 11]) * 100, 2))],
-                              'Assets AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 12] - last_month.iloc[len(this_month) - 1, 12]) * 100, 2))]
-                             })
-    return (retVal)
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
