@@ -95,7 +95,7 @@ def get_report_periods_for_display_from_db():
     #    df_retVal.loc[df_retVal['period'] == period, 'report_periods_formatted'] = convertDateToDisplay(str(period))
 
     #return df_retVal
-    return (retVal)
+    return (periods)
 
 def get_report_periods_for_display():
     periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
