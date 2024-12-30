@@ -78,7 +78,7 @@ def get_report_periods_for_display_from_db():
     for index, row in periods.iterrows():
         row['REPORT_PERIODS_FORMATTED'] = row['REPORT_PERIODS_FORMATTED']
         display = convertDateToDisplay(str(row['REPORT_PERIODS_FORMATTED']))
-        st.write(display)
+        #st.write(display)
         #convertDateToDisplay(str(period))
     #periods = pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/MonthlyReportPeriods.csv')    
     retVal = list()
