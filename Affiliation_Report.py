@@ -62,7 +62,7 @@ def get_report_periods():
 
 def get_report_periods_from_db():
     session = dbConn.session()
-    retVal = session.sql("SELECT TABLE_SCHEMA, TABLE_NAME, TABLE_OWNER, ROW_COUNT, BYTES, CREATED, LAST_ALTERED FROM " + databaseName + ".information_schema.tables WHERE table_type!='VIEW' ").to_pandas()
+    retVal = session.sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas()
     
     return (retVal)
 
