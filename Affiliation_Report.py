@@ -80,12 +80,13 @@ def get_report_periods_for_display_from_db():
     #periods['report_periods_formatted'] = convertDateToDisplay(str(periods['PERIOD']))
     periods['report_periods_formatted'] = convertDateToDisplay(str('202410'))
 
+    periods['report_periods_formatted_test'] = convertDateToDisplay(str('202411'))
+    #df['c'] = df.apply(lambda row: row.a + row.b, axis=1)
+
+    
     for index, row in periods.iterrows():
         #row['report_periods_formatted'] = convertDateToDisplay(str(row['PERIOD']))
         row['report_periods_formatted'] = "HERE"
-        #display = convertDateToDisplay(str(row['REPORT_PERIODS_FORMATTED']))
-        #st.write(display)
-        #convertDateToDisplay(str(period))
     return (periods)
 
 def get_report_periods_for_display():
