@@ -108,7 +108,7 @@ def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
     else:
         aflType = 'Either'
 
-    sqlStmt += aflType
+    sqlStmt += aflType + table_number
     
     #if(group_by == 'League'):
     #    groupBy = 'ByLeague'
