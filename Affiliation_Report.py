@@ -59,7 +59,8 @@ def get_report_periods():
         index += 1
     
     return (retVal)
-
+    
+@st.cache_data
 def get_report_periods_from_db():
     session = dbConn.session()
     retVal = session.sql("SELECT DISTINCT(SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, length(TABLE_NAME))) FROM monthly_report.information_schema.tables WHERE table_schema!='INFORMATION_SCHEMA' ORDER BY SUBSTR(TABLE_NAME, LENGTH(TABLE_NAME)-5, LENGTH(TABLE_NAME)) DESC").to_pandas()
