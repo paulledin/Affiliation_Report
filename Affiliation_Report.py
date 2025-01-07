@@ -207,8 +207,6 @@ else:
     
         month = report_periods['report_periods_formatted']
         selected_month = st.selectbox('Month', month)
-
-    st.write(selected_group_by)
     
     if (selected_group_by == 'Asset Class(9)'):
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "4")
