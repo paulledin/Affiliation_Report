@@ -77,8 +77,8 @@ def getMetricDeltas(aflType, groupBy, month, report_periods):
                 'Assets AFL Delta':[]
                 })
     else:
-        this_month = getTableAFLTable(aflType, groupBy, month, "1")
-        last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
+        this_month = getTableAFLTable_from_db(aflType, groupBy, month, "1")
+        last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
         
         retVal = pd.DataFrame({'CU AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 10] - last_month.iloc[len(this_month) - 1, 10]) * 100, 2))],
                               'Members AFL Delta' : [str(round((this_month.iloc[len(this_month) - 1, 11] - last_month.iloc[len(this_month) - 1, 11]) * 100, 2))],
