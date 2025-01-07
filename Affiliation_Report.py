@@ -77,6 +77,14 @@ def getMetricDeltas(aflType, groupBy, month, report_periods):
                 'Assets AFL Delta':[]
                 })
     else:
+    if (selected_group_by == 'Asset Class(9)'):
+        this_month = getTableAFLTable_from_db(aflType, groupBy, month, "4")
+        last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "4")
+    elif (selected_group_by == 'Asset Class(13)'):
+        this_month = getTableAFLTable_from_db(aflType, groupBy, month, "3")
+        last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "3")
+    else:
+        #table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
         this_month = getTableAFLTable_from_db(aflType, groupBy, month, "1")
         last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
         
