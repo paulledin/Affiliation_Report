@@ -200,7 +200,7 @@ else:
 
     if (group_by == 'Asset Class(9)'):
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "4")
-    elif (group_by == 'Asset Class(13)':
+    elif (group_by == 'Asset Class(13)'):
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "3")
     else:
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
