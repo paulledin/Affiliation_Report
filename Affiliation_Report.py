@@ -197,8 +197,13 @@ else:
     
         month = report_periods['report_periods_formatted']
         selected_month = st.selectbox('Month', month)
-    
-    table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
+
+    if (group_by == 'Asset Class(9)'):
+        table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "4")
+    elif (group_by == 'Asset Class(13)':
+        table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "3")
+    else:
+        table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
     
     table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
