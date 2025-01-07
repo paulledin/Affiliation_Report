@@ -130,8 +130,6 @@ def getTableAFLTable_from_db(afl_type, group_by, month, table_number):
         groupBy = 'ByState'
     sqlStmt += '_' + groupBy + '_' + convertDateToSystem(month)
 
-    st.write(sqlStmt)
-
     return (dbConn.session().sql(sqlStmt).to_pandas())
 
 def get_report_periods():
