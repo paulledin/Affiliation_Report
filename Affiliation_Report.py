@@ -197,7 +197,7 @@ else:
     with st.sidebar:
         st.title('Affiliation Report')
     
-        afl_type = ['Member of CUNA and/or NAFCU','Legacy CUNA', 'Legacy NAFCU', 'Member of Both']
+        afl_type = ['Member of Americas Credit Unions','Legacy CUNA', 'Legacy NAFCU', 'Member of Both']
         selected_afl_type = st.selectbox('Affiliation Type', afl_type)
     
         group_by = ['State', 'League', 'Asset Class(9)', 'Asset Class(13)']
