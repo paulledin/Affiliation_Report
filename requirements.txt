@@ -8,6 +8,7 @@ tf-keras
 torch
 pandas
 matplotlib
+pyarrow<19.0.0
 
 ##altair
 ##pandas
