@@ -218,68 +218,20 @@ else:
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
     column_configuration = {
-            "State": st.column_config.TextColumn(
-            "State", max_chars=50
-            ),
-            "Affiliated CUs": st.column_config.NumberColumn(
-            "Affiliated CUs",
-            min_value=0,
-            max_value=10000,
-            ),
-            "Non Affiliated CUs": st.column_config.NumberColumn(
-            "Non Affiliated CUs",
-            min_value=0,
-            max_value=10000,
-            ),
-            "State Chartered": st.column_config.NumberColumn(
-            "State Chartered",
-            min_value=0,
-            max_value=10000,
-            ),
-            "Fed Chartered": st.column_config.NumberColumn(
-            "Fed Chartered",
-            min_value=0,
-            max_value=10000,
-            ),
-            "Total CUs": st.column_config.NumberColumn(
-            "Total CUs",
-            min_value=0,
-            max_value=10000,
-            ),
-            "Affiliated Memberships": st.column_config.NumberColumn(
-            "Affiliated Memberships",
-            min_value=0,
-            max_value=10000,
-            ),
-            "Affiliated Assets": st.column_config.NumberColumn(
-            "Affiliated Assets",
-            min_value=0,
-            max_value=10000,
-            ),
-            "Total Assets": st.column_config.NumberColumn(
-            "Total Assets",
-            min_value=0,
-            max_value=10000,
-            ),
-            "% CUs Affiliated": st.column_config.NumberColumn(
-            "% CUs Affiliated",
-            min_value=0,
-            max_value=10000,
-            format="%.1f"
-            ),
-            "% Memberships Affiliated": st.column_config.NumberColumn(
-            "% Memberships Affiliated",
-            min_value=0,
-            max_value=10000,
-            format="%.2f"
-            ),
-            "% Assets Affiliated": st.column_config.NumberColumn(
-            "% Assets Affiliated",
-            min_value=0,
-            max_value=10000,
-            format="%.2f"
-            ),
-            }
+        "State": st.column_config.TextColumn("State", max_chars=50),
+        "Affiliated CUs": st.column_config.NumberColumn("Affiliated CUs", min_value=0, max_value=10000),
+        "Non Affiliated CUs": st.column_config.NumberColumn("Non Affiliated CUs", min_value=0, max_value=10000),
+        "State Chartered": st.column_config.NumberColumn("State Chartered", min_value=0, max_value=10000),
+        "Fed Chartered": st.column_config.NumberColumn("Fed Chartered", min_value=0, max_value=10000),
+        "Total CUs": st.column_config.NumberColumn("Total CUs", min_value=0, max_value=10000),
+        "Affiliated Memberships": st.column_config.NumberColumn("Affiliated Memberships", min_value=0, max_value=10000),
+        "Affiliated Assets": st.column_config.NumberColumn("Affiliated Assets", min_value=0, max_value=10000),
+        "Total Assets": st.column_config.NumberColumn("Total Assets", min_value=0, max_value=10000),
+        "% CUs Affiliated": st.column_config.NumberColumn("% CUs Affiliated", min_value=0, max_value=10000, format="%.1f"),
+        "% Memberships Affiliated": st.column_config.NumberColumn("% Memberships Affiliated", min_value=0, max_value=10000, format="%.2f"),
+        "% Assets Affiliated": st.column_config.NumberColumn("% Assets Affiliated", min_value=0, max_value=10000, format="%.2f")
+    }
+
 
     col = st.columns((1.5, 6.5), gap='medium')
     with col[0]:          
