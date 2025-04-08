@@ -302,6 +302,7 @@ else:
                          hide_index = True,
                          )   
             
+        grid_return = AgGrid(table2)
         st.markdown('---')
 
 
