@@ -282,13 +282,6 @@ else:
         min_value=0,
         max_value=1000000000000,
         step=1,
-        format="localized",),
-        "% CUs Affiliated": st.column_config.NumberColumn(
-        "% CUs Affiliated",
-        help="Pecentage of Credit Unions Affiliated with ACUs",
-        min_value=0,
-        max_value=10000,
-        step=1,
         format="localized",)
         }
 
