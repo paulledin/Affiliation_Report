@@ -220,7 +220,7 @@ else:
 
     column_configuration = {
         "Total Assets": st.column_config.NumberColumn(
-        "Total Assets",
+        "Total Assets ($)",
         help="Credit Union Total Assets",
         min_value=0,
         max_value=1000000000000,
@@ -283,8 +283,6 @@ else:
                          use_container_width = True, 
                          hide_index = True,
                          )   
-            
-        #grid_return = AgGrid(table1)
         st.markdown('---')
 
 
