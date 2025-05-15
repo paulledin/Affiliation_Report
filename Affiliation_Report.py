@@ -249,7 +249,7 @@ else:
         format="localized",),
         "Total CUs": st.column_config.NumberColumn(
         "Total # of CUs",
-        help="Number of Federally Chartered Credit Unions",
+        help="Total Number of Credit Unions",
         min_value=0,
         max_value=100000,
         step=1,
