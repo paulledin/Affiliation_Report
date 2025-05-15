@@ -289,7 +289,7 @@ else:
         min_value=0,
         max_value=10000,
         step=1,
-        format="percent",)
+        format="localized",)
         }
 
 
