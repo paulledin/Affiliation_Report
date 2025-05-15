@@ -277,7 +277,7 @@ else:
                              min_value=0,
                              max_value=1000000000000,
                              step=1,
-                             format="$%d",)}
+                             format="$%d",)},
                      use_container_width = True, 
                      hide_index = True,
                      )
