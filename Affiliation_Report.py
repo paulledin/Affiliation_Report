@@ -223,7 +223,14 @@ else:
         "Total Affiliated CUs",
         help="Number of Affiliated Credit Unions",
         min_value=0,
-        max_value=1000000000000,
+        max_value=100000,
+        step=1,
+        format="localized",),
+        "Non Affiliated CUs": st.column_config.NumberColumn(
+        "Non Affiliated CUs",
+        help="Number of Non-Affiliated Credit Unions",
+        min_value=0,
+        max_value=100000,
         step=1,
         format="localized",),
         "Affiliated Assets": st.column_config.NumberColumn(
