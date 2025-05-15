@@ -219,6 +219,13 @@ else:
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
     column_configuration = {
+        "Affiliated Assets": st.column_config.NumberColumn(
+        "Total Affiliated Assets ($)",
+        help="Affiliated Credit Union Total Assets",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",),
         "Total Assets": st.column_config.NumberColumn(
         "Total Assets ($)",
         help="Credit Union Total Assets",
