@@ -277,12 +277,14 @@ else:
                              min_value=0,
                              max_value=1000000000000,
                              step=1,
-                             format="$%d",)},
-                     use_container_width = True, 
+                             format="$%d",
+                             )
+                             },
                      hide_index = True,
                      )
 
     '''    
+    use_container_width = True,
         st.data_editor(
        data_df,
     column_config={
