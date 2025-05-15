@@ -220,7 +220,7 @@ else:
 
     column_configuration = {
         "Affiliated CUs": st.column_config.NumberColumn(
-        "Total Affiliated Credit Unions",
+        "Total Affiliated CUs",
         help="Number of Affiliated Credit Unions",
         min_value=0,
         max_value=1000000000000,
