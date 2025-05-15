@@ -288,7 +288,7 @@ else:
         min_value=0,
         max_value=100,
         step=1,
-        format="%.2f",)
+        format="%d",)
         }
 
 
