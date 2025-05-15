@@ -270,9 +270,31 @@ else:
             st.markdown('#### Table 1')
         
         st.dataframe(data = table1,
+                     column_config={
+                         "Total Assets": st.column_config.NumberColumn(
+                             "Assets",
+                             help="Credit Union Total Assets",
+                             min_value=0,
+                             max_value=1000000000000,
+                             step=1,
+                             format="$%d",)}
                      use_container_width = True, 
                      hide_index = True,
                      )
+
+    '''    
+        st.data_editor(
+       data_df,
+    column_config={
+        "price": st.column_config.NumberColumn(
+            "Price (in USD)",
+            help="The price of the product in USD",
+            min_value=0,
+            max_value=1000,
+            step=1,
+            format="$%d",
+            )},hide_index=True,)
+    '''
         st.markdown('---')
         st.markdown('---')
 
