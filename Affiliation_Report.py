@@ -214,8 +214,7 @@ else:
     else:
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
     
-    #table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
-    table1['% CUs Affiliated'] = table1['% CUs Affiliated'] 
+    table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100 
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
