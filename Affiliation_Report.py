@@ -214,7 +214,8 @@ else:
     else:
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
     
-    table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
+    #table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
+    table1['% CUs Affiliated'] = table1['% CUs Affiliated'] 
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
@@ -281,7 +282,14 @@ else:
         min_value=0,
         max_value=1000000000000,
         step=1,
-        format="localized",)
+        format="localized",),
+        "% CUs Affiliated": st.column_config.NumberColumn(
+        "% CUs Affiliated",
+        help="Pecentage of Credit Unions Affiliated with ACUs",
+        min_value=0,
+        max_value=10000,
+        step=1,
+        format="percent",)
         }
 
 
