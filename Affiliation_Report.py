@@ -287,8 +287,7 @@ else:
         help="Percentage of CUs Affiliated with ACUs",
         min_value=0,
         max_value=100,
-        step=1,
-        format="localized",)
+        step=1,)
         }
 
 
