@@ -272,7 +272,7 @@ else:
         st.dataframe(data = table1,
                      column_config={
                          "Total Assets": st.column_config.NumberColumn(
-                             "Assets",
+                             "Total Assets",
                              help="Credit Union Total Assets",
                              min_value=0,
                              max_value=1000000000000,
