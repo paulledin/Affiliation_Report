@@ -254,6 +254,13 @@ else:
         max_value=100000,
         step=1,
         format="localized",),
+        "Affiliated Memberships": st.column_config.NumberColumn(
+        "Affiliated Memberships",
+        help="# of Affiliated Memberships",
+        min_value=0,
+        max_value=100000000,
+        step=1,
+        format="localized",),
         "Affiliated Assets": st.column_config.NumberColumn(
         "Total Affiliated Assets ($)",
         help="Affiliated Credit Union Total Assets",
