@@ -256,7 +256,7 @@ else:
         format="localized",),
         "Affiliated Memberships": st.column_config.NumberColumn(
         "Affiliated Memberships",
-        help="# of Affiliated Memberships",
+        help="Number of Affiliated Memberships",
         min_value=0,
         max_value=100000000,
         step=1,
