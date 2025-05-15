@@ -269,7 +269,7 @@ else:
         else:
             st.markdown('#### Table 1')
         
-        st.data_editor(data = table1,
+        st.dataframe(data = table1,
                      column_config={
                          "Total Assets": st.column_config.NumberColumn(
                              "Assets",
