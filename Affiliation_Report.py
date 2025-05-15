@@ -240,6 +240,13 @@ else:
         max_value=100000,
         step=1,
         format="localized",),
+       "Fed Chartered": st.column_config.NumberColumn(
+        "Fed Chartered CUs",
+        help="Number of Federally Chartered Credit Unions",
+        min_value=0,
+        max_value=100000,
+        step=1,
+        format="localized",),
         "Affiliated Assets": st.column_config.NumberColumn(
         "Total Affiliated Assets ($)",
         help="Affiliated Credit Union Total Assets",
