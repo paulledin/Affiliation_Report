@@ -265,7 +265,7 @@ else:
 
     with col[1]:
         if selected_group_by == 'State' or selected_group_by == 'League':
-            st.markdown('#### Table 1 - Excludes Puerto Rico/Territories')
+            st.markdown('#### Table 1 - Excludes Puerto Rico/Territories - ACUs')
         else:
             st.markdown('#### Table 1')
         
