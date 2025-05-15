@@ -218,6 +218,15 @@ else:
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
+    column_configuration = {
+        "Total Assets": st.column_config.NumberColumn(
+        "Total Assets",
+        help="Credit Union Total Assets",
+        min_value=0,
+        max_value=1000000000000,
+        step=1,
+        format="localized",)
+        }
 
 
     col = st.columns((1.5, 6.5), gap='medium')
