@@ -262,8 +262,8 @@ else:
         step=1,
         format="localized",),
         "Total Memberships": st.column_config.NumberColumn(
-        "Total Memberships",
-        help="Number of Total Memberships",
+        "Total CU Memberships",
+        help="Number of Total CU Memberships",
         min_value=0,
         max_value=100000000,
         step=1,
@@ -276,7 +276,7 @@ else:
         step=1,
         format="localized",),
         "Total Assets": st.column_config.NumberColumn(
-        "Total Assets ($)",
+        "Total CU Assets ($)",
         help="Credit Union Total Assets",
         min_value=0,
         max_value=1000000000000,
