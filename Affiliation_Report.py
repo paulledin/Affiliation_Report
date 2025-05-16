@@ -334,7 +334,7 @@ else:
         if selected_group_by == 'State' or selected_group_by == 'League':
             st.markdown('#### Table 2 - Puerto Rico/Territories')
             table2 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "2")
-            table2['% CUs Affiliated'] = table2['% CUs Affiliated'] * 100
+            table2['% CUs Affiliated'] = str(table2['% CUs Affiliated'] * 100)
             table2['% Memberships Affiliated'] = table2['% Memberships Affiliated'] * 100
             table2['% Assets Affiliated'] = table2['% Assets Affiliated'] * 100
         
