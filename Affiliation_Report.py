@@ -213,11 +213,7 @@ else:
     
     table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 1).astype('str') + '%'
     table1['% Memberships Affiliated'] = round(table1['% Memberships Affiliated'] * 100, 1).astype('str') + '%'
-
-
-    
-    #table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
-    table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
+    table1['% Assets Affiliated'] = round(table1['% Assets Affiliated'] * 100, 1).astype('str') + '%'
 
     column_configuration = {
         "Affiliated CUs": st.column_config.NumberColumn(
@@ -299,11 +295,11 @@ else:
         if len(metric_deltas) == 0:
             st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10])
             st.metric(label = 'Members Affiliated', value = table1.iloc[len(table1) - 1, 11])
-            st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%')
+            st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12])
         else:
             st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10], delta = metric_deltas.iloc[0, 0])
             st.metric(label = 'Members Affiliated', value = table1.iloc[len(table1) - 1, 11], delta = metric_deltas.iloc[0, 1])
-            st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
+            st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12], delta = metric_deltas.iloc[0, 2])
             st.markdown('---')
     
         with st.expander('About', expanded=True):
