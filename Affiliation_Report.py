@@ -213,7 +213,7 @@ else:
     
     #st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%')
     #table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
-    table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 1) 
+    table1['% CUs Affiliated'] = str(round(table1['% CUs Affiliated'] * 100, 1)) 
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
 
