@@ -211,14 +211,10 @@ else:
     else:
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
     
-    #st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%')
-    #table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
     table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 2)
     table1['% CUs Affiliated'] = table1['% CUs Affiliated'].astype('str') + '%'
 
 
-    #df['column_name'] = df['column_name'].astype('str')
-    #table1['% CUs Affiliated-test'] = str(table1['% CUs Affiliated']) 
     
     table1['% Memberships Affiliated'] = table1['% Memberships Affiliated'] * 100
     table1['% Assets Affiliated'] = table1['% Assets Affiliated'] * 100
