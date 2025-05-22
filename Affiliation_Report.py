@@ -214,7 +214,7 @@ else:
     #st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%')
     #table1['% CUs Affiliated'] = table1['% CUs Affiliated'] * 100
     table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 1)
-    table1['% CUs Affiliated'] = table1['% CUs Affiliated'].astype('str')
+    table1['% CUs Affiliated-test'] = table1['% CUs Affiliated'].astype('str')
 
 
     #df['column_name'] = df['column_name'].astype('str')
