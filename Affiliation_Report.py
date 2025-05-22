@@ -211,7 +211,7 @@ else:
     else:
         table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
     
-    table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 2)
+    table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 1)
     table1['% CUs Affiliated'] = table1['% CUs Affiliated'].astype('str') + '%'
 
 
