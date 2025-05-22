@@ -279,13 +279,13 @@ else:
         max_value=1000000000000,
         step=1,
         format="localized",),
-        "% CUs Affiliated": st.column_config.NumberColumn(
-        "CUs Affiliated (%)",
-        help="Percentage of CUs Affiliated with ACUs",
-        min_value=0,
-        max_value=100,
-        step=1,
-        format="localized",)
+        #"% CUs Affiliated": st.column_config.NumberColumn(
+        #"CUs Affiliated (%)",
+        #help="Percentage of CUs Affiliated with ACUs",
+        #min_value=0,
+        #max_value=100,
+        #step=1,
+        #format="localized",)
         #format="%.2f",)
         }
 
