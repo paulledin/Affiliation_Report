@@ -287,14 +287,6 @@ else:
         max_value=1000000000000,
         step=1,
         format="localized",),
-        #"% CUs Affiliated": st.column_config.NumberColumn(
-        #"CUs Affiliated (%)",
-        #help="Percentage of CUs Affiliated with ACUs",
-        #min_value=0,
-        #max_value=100,
-        #step=1,
-        #format="localized",)
-        #format="%.2f",)
         }
 
 
@@ -309,11 +301,10 @@ else:
             st.markdown('---')
     
         if len(metric_deltas) == 0:
-            st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%')
+            st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10])
             st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%')
             st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%')
         else:
-            #st.metric(label = 'Credit Unions Affiliated', value = str(round(table1.iloc[len(table1) - 1, 10], 1)) + '%', delta = metric_deltas.iloc[0, 0])
             st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10], delta = metric_deltas.iloc[0, 0])
             st.metric(label = 'Members Affiliated', value = str(round(table1.iloc[len(table1) - 1, 11], 1)) + '%', delta = metric_deltas.iloc[0, 1])
             st.metric(label = 'Assets Affiliated', value = str(round(table1.iloc[len(table1) - 1, 12], 1)) + '%', delta = metric_deltas.iloc[0, 2])
