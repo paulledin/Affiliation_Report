@@ -331,10 +331,6 @@ else:
             table2['% CUs Affiliated'] = round(table2['% CUs Affiliated'] * 100, 1).astype('str') + '%'
             table2['% Memberships Affiliated'] = round(table2['% Memberships Affiliated'] * 100, 1).astype('str') + '%'
             table2['% Assets Affiliated'] = round(table2['% Assets Affiliated'] * 100, 1).astype('str') + '%'
-
-            #table2['% CUs Affiliated'] = str(round(table2['% CUs Affiliated'] * 100, 2)) + ".00"
-            #table2['% Memberships Affiliated'] = table2['% Memberships Affiliated'] * 100
-            #table2['% Assets Affiliated'] = table2['% Assets Affiliated'] * 100
         
             st.dataframe(data = table2, 
                          column_config=column_configuration,
