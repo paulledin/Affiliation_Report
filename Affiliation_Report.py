@@ -336,6 +336,6 @@ else:
                          use_container_width = True, 
                          hide_index = True,
                          )   
-        st.markdown('---')
+            st.markdown('---')
 
 
