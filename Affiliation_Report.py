@@ -186,6 +186,10 @@ with st.sidebar:
     st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
     passphrase = st.text_input("### Please enter the passphrase:")
 
+if (passphrase != thePassPhrase):
+    if len(passphrase) > 0:
+        st.markdown('# Passphrase not correct....')
+        st.markdown('### Please try again or contact: pledin@americascreditunions.org for assistance.')
 
 
 
