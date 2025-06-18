@@ -181,8 +181,8 @@ def getTableAFLTable(afl_type, group_by, month, table_number):
 ###############################################################################
 #Start building Streamlit App
 ###############################################################################
-report_periods = get_report_periods_for_display_from_db()
-
+report_periods = get_report_periods_for_display()
+'''
 with st.sidebar:
     st.markdown('![alt text](https://raw.githubusercontent.com/paulledin/data/master/ACUS.jpg)')
     passphrase = st.text_input("### Please enter the passphrase:")
@@ -338,5 +338,5 @@ else:
                          hide_index = True,
                          )   
             st.markdown('---')
-
+'''
 
