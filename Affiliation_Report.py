@@ -284,33 +284,6 @@ else:
         format="localized",),
         }
 
-    col = st.columns((1.5, 6.5), gap='medium')
-    with col[0]:
-        metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month, report_periods)
 
-        st.markdown('#### Key Ratios')
-        if selected_group_by == 'State' or selected_group_by == 'League':
-            st.markdown('###### (excludes Table 2 CUs)')
-            st.markdown('###### ' + 'Month Ended - ' + selected_month)
-            st.markdown('---')
-
-        if len(metric_deltas) == 0:
-            st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10])
-            st.metric(label = 'Members Affiliated', value = table1.iloc[len(table1) - 1, 11])
-            st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12])
-        else:
-            st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10], delta = metric_deltas.iloc[0, 0])
-            st.metric(label = 'Members Affiliated', value = table1.iloc[len(table1) - 1, 11], delta = metric_deltas.iloc[0, 1])
-            st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12], delta = metric_deltas.iloc[0, 2])
-            st.markdown('---')
-
-        with st.expander('About', expanded=True):
-            st.write('''
-                     - Data: NIMBLE AMS and [NCUA Call Report Data](<https://ncua.gov/analysis/credit-union-corporate-call-report-data/quarterly-data>).
-                     - Includes all 'Active' status (NIMBLE) credit unions with a call report filed for most recent reporting period (NCUA).
-                     - NIMBLE data is as-of month end.
-                     ''')
-
-        st.markdown('---')
 
 
