@@ -205,11 +205,14 @@ else:
         selected_month = st.selectbox('Month', month)
 
     if (selected_group_by == 'Asset Class(9)'):
-        table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "4")
+        #table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "4")
+        table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "4")
     elif (selected_group_by == 'Asset Class(13)'):
-        table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "3")
+        #table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "3")
+        table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "3")
     else:
-        table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
+        #table1 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "1")
+        table1 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "1")
 
     table1['% CUs Affiliated'] = round(table1['% CUs Affiliated'] * 100, 1).astype('str') + '%'
     table1['% Memberships Affiliated'] = round(table1['% Memberships Affiliated'] * 100, 1).astype('str') + '%'
