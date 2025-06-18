@@ -5,7 +5,7 @@ Created on Mon Jul 29 13:40:15 2024
 @author: Paul Ledin
 """
 
-#import streamlit as st
+import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
