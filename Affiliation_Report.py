@@ -295,15 +295,7 @@ with col[0]:
             st.markdown('###### ' + 'Month Ended - ' + selected_month)
             st.markdown('---')
 
-        if len(metric_deltas) == 0:
-            st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10])
-            st.metric(label = 'Members Affiliated', value = table1.iloc[len(table1) - 1, 11])
-            st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12])
-        else:
-            st.metric(label = 'Credit Unions Affiliated', value = table1.iloc[len(table1) - 1, 10], delta = metric_deltas.iloc[0, 0])
-            st.metric(label = 'Members Affiliated', value = table1.iloc[len(table1) - 1, 11], delta = metric_deltas.iloc[0, 1])
-            st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12], delta = metric_deltas.iloc[0, 2])
-            st.markdown('---')
+        
 
 
 
