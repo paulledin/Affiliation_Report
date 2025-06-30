@@ -335,7 +335,8 @@ else:
 
         if selected_group_by == 'State' or selected_group_by == 'League':
             st.markdown('#### Table 2 - Puerto Rico/Territories')
-            table2 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "2")
+            #table2 = getTableAFLTable_from_db(selected_afl_type, selected_group_by, selected_month, "2")
+            table2 = getTableAFLTable(selected_afl_type, selected_group_by, selected_month, "2")
 
             table2['% CUs Affiliated'] = round(table2['% CUs Affiliated'] * 100, 1).astype('str') + '%'
             table2['% Memberships Affiliated'] = round(table2['% Memberships Affiliated'] * 100, 1).astype('str') + '%'
