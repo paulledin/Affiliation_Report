@@ -286,6 +286,8 @@ else:
 
     col = st.columns((1.5, 6.5), gap='medium')
 
+    with col[0]:
+        metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month, report_periods)
 
 
         
