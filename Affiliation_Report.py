@@ -295,6 +295,12 @@ else:
     with col[0]:
         metric_deltas = getMetricDeltas(selected_afl_type, selected_group_by, selected_month, report_periods)
 
+        st.markdown('#### Key Ratios')
+        if selected_group_by == 'State' or selected_group_by == 'League':
+            st.markdown('###### (excludes Table 2 CUs)')
+            st.markdown('###### ' + 'Month Ended - ' + selected_month)
+            st.markdown('---')
+
 
         
 
