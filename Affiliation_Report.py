@@ -326,6 +326,13 @@ else:
         else:
             st.markdown('#### Table 1')
 
+        st.dataframe(data = table1,
+                     column_config=column_configuration,
+                     hide_index = True,
+                     )
+
+        st.markdown('---')
+
 
 
 
