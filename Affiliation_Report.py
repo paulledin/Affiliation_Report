@@ -311,6 +311,15 @@ else:
             st.metric(label = 'Assets Affiliated', value = table1.iloc[len(table1) - 1, 12], delta = metric_deltas.iloc[0, 2])
             st.markdown('---')
 
+        with st.expander('About', expanded=True):
+            st.write('''
+                     - Data: NIMBLE AMS and [NCUA Call Report Data](<https://ncua.gov/analysis/credit-union-corporate-call-report-data/quarterly-data>).
+                     - Includes all 'Active' status (NIMBLE) credit unions with a call report filed for most recent reporting period (NCUA).
+                     - NIMBLE data is as-of month end.
+                     ''')
+
+        st.markdown('---')
+
 
 
 
