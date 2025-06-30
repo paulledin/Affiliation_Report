@@ -284,7 +284,7 @@ else:
         format="localized",),
         }
 
-col = st.columns((1.5, 6.5), gap='medium')
+    col = st.columns((1.5, 6.5), gap='medium')
 
 
 
