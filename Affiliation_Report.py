@@ -181,9 +181,6 @@ def getTableAFLTable(afl_type, group_by, month, table_number):
         groupBy = 'ByAcl_13'
     else:
         groupBy = 'ByState'
-        
-
-    st.write('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv')
     
     return pd.DataFrame(pd.read_csv('https://raw.githubusercontent.com/paulledin/data/master/afl_table_' + table_number + '_' + groupBy + '_' + aflType + '_' + convertDateToSystem(month) + '.csv'))
 ###############################################################################
