@@ -80,13 +80,13 @@ def getMetricDeltas(aflType, groupBy, month, report_periods):
         if (selected_group_by == 'Asset Class(9)'):
             #this_month = getTableAFLTable_from_db(aflType, groupBy, month, "4")
             #last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "4")
-            this_month = getTableAFLTable(aflType, groupBy, month, "4")
-            last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "4")
+            this_month = getTableAFLTable(aflType, groupBy, month, "1")
+            last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
         elif (selected_group_by == 'Asset Class(13)'):
             #this_month = getTableAFLTable_from_db(aflType, groupBy, month, "3")
             #last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "3")
-            this_month = getTableAFLTable(aflType, groupBy, month, "3")
-            last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "3")
+            this_month = getTableAFLTable(aflType, groupBy, month, "1")
+            last_month = getTableAFLTable(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
         else:
             #this_month = getTableAFLTable_from_db(aflType, groupBy, month, "1")
             #last_month = getTableAFLTable_from_db(aflType, groupBy, convertDateToDisplay(getPreviousSystemMonth(month)), "1")
